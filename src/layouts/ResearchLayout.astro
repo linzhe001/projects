@@ -1,6 +1,6 @@
 ---
 import '../styles/research.css';
-const { title, description = 'Research projects in surgical vision, registration, and medical AI.' } = Astro.props;
+const { title, description = 'Research projects in surgical vision, registration, and medical AI.', image = '/projects/social-card.png' } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -8,9 +8,14 @@ const { title, description = 'Research projects in surgical vision, registration
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta property="og:title" content={`${title} | Linzhe Jiang`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={new URL(image, Astro.site).href} />
     <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href={Astro.url.href} />
-    <link rel="icon" href="/assets/img/profile-symbol.svg" type="image/svg+xml" />
+    <link rel="icon" href="/projects/favicon.svg" type="image/svg+xml" />
     <title>{title} | Linzhe Jiang</title>
   </head>
   <body>
