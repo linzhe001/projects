@@ -1,0 +1,19 @@
+---
+import ResearchLayout from '../layouts/ResearchLayout.astro';
+import { getCollection } from 'astro:content';
+const projects = (await getCollection('projects')).sort((a,b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<ResearchLayout title="Research Projects">
+  <div class="eyebrow">Research · Datasets · Systems</div>
+  <h1>Projects</h1>
+  <p class="lead">A closer look at the research questions, methods, results, and limitations behind my work in surgical vision and spatial intelligence. Publications and source code are linked from each project.</p>
+  <div class="projects">
+    {projects.map(project => (
+      <a class="project-card" href={`${base}${project.id}/`}>
+        <img src={`${base}${project.data.cover.replace(/^\//,'')}`} alt={`${project.data.title} project preview`} loading="lazy" />
+        <div><span>{project.data.category} · {project.data.year} · {project.data.status}</span><h2>{project.data.title}</h2><p>{project.data.subtitle}</p><small>View project →</small></div>
+      </a>
+    ))}
+  </div>
+</ResearchLayout>

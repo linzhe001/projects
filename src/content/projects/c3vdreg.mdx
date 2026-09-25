@@ -1,0 +1,43 @@
+---
+title: 'C3VDReg'
+subtitle: 'A benchmark for local-to-local colonoscopic point-cloud registration toward anatomical localization.'
+year: 2025
+category: 'Dataset & benchmark'
+status: 'arXiv preprint'
+cover: 'images/c3vdreg.png'
+paper: 'https://arxiv.org/abs/2511.00260'
+code: 'https://github.com/linzhe001/C3VDReg'
+order: 2
+---
+
+## The problem
+
+Anatomy-aware colonoscopic navigation needs to match partial endoscopic observations to a stable anatomical reference. Repetitive haustral folds, similar tubular geometry, partial views, and noisy depth make this markedly different from standard rigid point-cloud registration datasets.
+
+## What I did
+
+C3VDReg builds matched partial-to-partial point-cloud pairs from the public Colonoscopy 3D Video Dataset (**C3VD**), captured with a rigid silicone colon phantom. Source clouds come from released depth-map reprojection; target clouds come from raycasting the reference mesh at matched camera poses. Both clouds use a common protocol: 8,192 points, source-only perturbations, and a fixed pose convention.
+
+<figure><img src="/projects/images/c3vdreg-pair-construction.png" alt="Source depth reprojection and CT-mesh raycasting used to construct a C3VDReg pair" /><figcaption>Frame-wise pair construction: depth-map reprojection versus viewpoint-matched mesh raycasting.</figcaption></figure>
+
+## Results and interpretation
+
+- **10,015** matched pairs, including **2,088** held-out test pairs across six held-out sequences.
+- The benchmark evaluates public baselines under one shared protocol.
+- Despite **74.3–93.1%** ground-truth overlap, registration recall is low across evaluated methods. Error decomposition suggests translation ambiguity along repetitive tubular anatomy as a major failure mode; an initialization-strength ablation remains important to separate ambiguity from starting-pose difficulty.
+
+<figure><img src="/projects/images/c3vdreg-qualitative.png" alt="Point-cloud registration examples showing accurate alignments and axial-sliding failure cases" /><figcaption>Qualitative same-sample comparisons reveal plausible yet incorrectly translated alignments.</figcaption></figure>
+
+## Limitations and clinical context
+
+The underlying C3VD data were captured on a **rigid phantom**, not on deforming tissue in live patients. The reported 0.321 mm and 0.159° pose validation errors in the source dataset were measured in simulation rather than on real phantom video. This is a research benchmark; the measured registration results should not be interpreted as clinical navigation accuracy.
+
+## Citation
+
+```bibtex
+@article{jiang2025c3vdreg,
+  title={C3VDReg: A Benchmark for Local-to-Local Colonoscopic Registration toward Anatomical Localization},
+  author={Jiang, Linzhe and Huang, Jiayuan and Bano, Sophia and Clarkson, Matthew J. and Mao, Zhehua and Hoque, Mobarak I.},
+  journal={arXiv preprint arXiv:2511.00260}, year={2025}
+}
+```

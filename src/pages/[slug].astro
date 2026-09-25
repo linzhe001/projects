@@ -1,0 +1,20 @@
+---
+import ResearchLayout from '../layouts/ResearchLayout.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  return (await getCollection('projects')).map(project => ({ params: { slug: project.id }, props: { project } }));
+}
+const { project } = Astro.props;
+const { Content } = await render(project);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<ResearchLayout title={project.data.title} description={project.data.subtitle}>
+  <div class="detail">
+    <a class="back" href="/projects/">← All projects</a>
+    <div class="eyebrow">{project.data.category} · {project.data.year} · {project.data.status}</div>
+    <h1>{project.data.title}</h1><p class="lead">{project.data.subtitle}</p>
+    <div class="resources">{project.data.paper && <a href={project.data.paper}>Paper ↗</a>}{project.data.code && <a href={project.data.code}>Code ↗</a>}</div>
+    <img class="hero-image" src={`${base}${project.data.cover.replace(/^\//,'')}`} alt={`${project.data.title} research overview`} />
+    <article class="prose"><Content /></article>
+  </div>
+</ResearchLayout>

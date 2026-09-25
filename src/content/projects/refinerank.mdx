@@ -1,0 +1,43 @@
+---
+title: 'RefineRank'
+subtitle: 'Joint box refinement and ranking for surgical spatio-temporal grounding.'
+year: 2026
+category: 'Surgical vision'
+status: 'Research paper · non-archival workshop presentation'
+cover: 'images/refinerank.png'
+paper: 'https://arxiv.org/abs/2608.23928'
+code: 'https://github.com/linzhe001/RefineRank'
+order: 1
+---
+
+## The problem
+
+Surgical spatio-temporal grounding asks a model to localize, at a specified video time, the object referred to by a procedural question. Medical vision-language models understand the question but often produce coarse locations; open-set detectors provide candidate boxes whose confidence does not necessarily identify the correct referent.
+
+## What I did
+
+RefineRank couples a frozen medical vision-language model with a frozen open-set detector. Its small trainable module, RefineNet, uses language and regional features to predict bounded coordinate corrections and box-quality scores. A fixed decoder chooses the highest-scoring original or refined candidate; no separately trained selector is needed.
+
+<figure><img src="/projects/images/refinerank-pipeline.png" alt="RefineRank model pipeline from language features and box proposals to refined predictions" /><figcaption>Frozen backbones provide contextual features and candidate boxes; RefineNet jointly corrects and ranks boxes.</figcaption></figure>
+
+## Results and interpretation
+
+- RefineRank records **0.421 STG mIoU**, the highest displayed verified STG score on the MedVidBench leaderboard's August 15 snapshot, with a global multi-metric rank of 11.
+- On video-separated training and evaluation videos, ranking original and refined candidates improves STG mIoU from **0.2719 to 0.4534**.
+- Correction raises the candidate-oracle upper bound from **0.6772 to 0.7302**; separately trained selectors over that candidate pool reach at most **0.4176**.
+
+<figure><img src="/projects/images/refinerank-qualitative.png" alt="Comparison of surgical grounding boxes produced by three approaches" /><figcaption>Representative grounding predictions compared against target boxes.</figcaption></figure>
+
+## Limitations
+
+The method depends on its frozen backbones and the quality of generated proposals. These are research benchmark results, not evidence of deployment readiness or clinical safety. The work was presented at a **non-archival** ECCV 2026 MedVidU Workshop, not the ECCV main conference.
+
+## Citation
+
+```bibtex
+@article{jiang2026refinerank,
+  title={RefineRank: Joint Box Refinement and Ranking for Surgical Spatio-Temporal Grounding},
+  author={Jiang, Linzhe and Huang, Jiayuan and Zhang, Changhao and Jiang, Chunyang and Mao, Zhehua and Hoque, Mobarak I.},
+  journal={arXiv preprint arXiv:2608.23928}, year={2026}
+}
+```

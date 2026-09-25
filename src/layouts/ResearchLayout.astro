@@ -1,0 +1,25 @@
+---
+import '../styles/research.css';
+const { title, description = 'Research projects in surgical vision, registration, and medical AI.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href={Astro.url.href} />
+    <link rel="icon" href="/assets/img/profile-symbol.svg" type="image/svg+xml" />
+    <title>{title} | Linzhe Jiang</title>
+  </head>
+  <body>
+    <div class="page">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="/">Home</a><a href="/publications/">Publications</a><a href="/projects/" aria-current="page">Projects</a><a href="/blog/">Blog</a><a href="/assets/pdf/Linzhe_Jiang_CV.pdf">CV</a>
+      </nav>
+      <main><slot /></main>
+      <footer><a href="/">← Linzhe Jiang</a><span>© 2026 Linzhe Jiang · Based on the <a href="https://github.com/erlandv/case">Case</a> project template.</span></footer>
+    </div>
+  </body>
+</html>
